@@ -4,8 +4,8 @@ var AudioOpus = function(browser_info, init_params) {
     var browser_info;
     var audioWS = null;
     var audioCount = 0;
-    var min_latency = 0.2; // 100ms
-    var max_latency = 1  // 500ms
+    var min_latency = 0.2; // 200ms
+    var max_latency = 1  // 1000ms
 
     init_params = init_params || {};
 
