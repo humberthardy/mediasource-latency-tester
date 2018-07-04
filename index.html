@@ -1,0 +1,53 @@
+<html>
+  <header>
+    <script type="application/javascript" src="./audio_opus.js"></script>
+    <script>
+     var audio;
+     var displayLatencyTimer;
+
+     function startOpus () {
+         audio = AudioOpus({"cmd_host": "127.0.0.1:6082"},{});
+         //audio.start();
+         displayLatencyTimer = setInterval(displayLatency, 250)
+
+     }
+
+     function stopOpus() {
+         audio.stop();
+         clearInterval(displayLatencyTimer);
+     }
+
+
+     function restartOpus() {
+         audio.restart();
+         clearInterval(displayLatencyTimer);
+         displayLatencyTimer = setInterval(displayLatency, 250)
+     }
+
+     function displayLatency() {
+         var audioElement = audio.getAudio();
+         console.log("Latency = ", audioElement.buffered.end(0) - audioElement.currentTime);
+
+     }
+
+     console.log = function() {
+        var args = Array.prototype.slice.call(arguments);
+        var textarea = document.getElementById('logs');
+        textarea.value = textarea.value + "\n" + args.join(" ");
+         try {
+             textarea.scrollTop = textarea.scrollHeight;
+
+         } catch(e) {}
+     }
+
+    </script>
+  </header>
+  <body>
+    <textarea id="logs" cols="80" rows="40">
+    </textarea>
+<br />
+    <button onclick="startOpus()">Stream!</button>
+    <button onclick="stopOpus()">Stop</button>
+    <button onclick="restartOpus()">Restart</button>
+  </body>
+</html>
